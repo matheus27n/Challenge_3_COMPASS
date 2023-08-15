@@ -5,6 +5,7 @@ import Root from "../src/routers/Root";
 import Login from "../src/components/login/Login";
 import Register from "../src/components/register/Register";
 
+
 const routes = [
   {
     path: "/",
@@ -20,9 +21,10 @@ const routes = [
 const BrowserRouter = createBrowserRouter(routes);
 
 function App() {
-  const apiUrl = "https://parseapi.back4app.com/classes/FitMe";
+  return( 
+  <RouterProvider router={BrowserRouter} />
 
-  return( <RouterProvider router={BrowserRouter} />
+
   
   );
 }

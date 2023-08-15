@@ -2,10 +2,11 @@ import styles from "./Homepage.module.css";
 import Header from "../../components/header/Header.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import Restaurante from "../../api/restaurantes/Restaurante.tsx";
-import PratosPrincipais from "../../api/pratos/PratosPrincipais.tsx";
+
 
 function Homepage() {
   const apiUrl = "https://parseapi.back4app.com/classes/FitMe"; // Use a URL da API aqui
+
   return (
     <div className={styles.homepage}>
       <Header />
@@ -19,13 +20,13 @@ function Homepage() {
               nisi ut aliquip ex ea commodo consequat.
             </p>
           </div>
-        <div>
-          <img className="image_1" src="..\src\assets\img\Rectangle 1.png" alt='img1'></img>
-          <img className="image_2" src="..\src\assets\img\Rectangle 2.png" alt='img2'></img>
+        <div className={styles.div_img}>
+          <img className={styles.image_1} src="..\src\assets\img\Rectangle 1.png" alt='img1'></img>
+          <img className={styles.image_2} src="..\src\assets\img\Rectangle 2.png" alt='img2'></img>
         </div>
       </div>
-      {/*<h1>Lista de Restaurantes</h1>*/}
-      {/*<Restaurante apiUrl={apiUrl} />*/}
+      {<h1>Restaurantes</h1>}
+      {<Restaurante apiUrl={apiUrl} />}
       {/*<h1>Lista de Pratos Principais</h1>*/}
       {/*<PratosPrincipais apiUrl={apiUrl} />*/}
       <Footer />

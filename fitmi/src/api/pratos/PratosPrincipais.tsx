@@ -19,15 +19,10 @@ function PratosPrincipais({ apiUrl }: PratosPrincipaisProps) {
     const headers = {
       'X-Parse-Application-Id': 'lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh',
       'X-Parse-REST-API-Key': '8aqUBWOjOplfA6lstntyYsYVkt3RzpVtb8qU5x08',
-      'Content-Type': 'application/json',
-    };
-
-    const params = {
-      where: JSON.stringify({ name: 'Prato Principal' }), // Exemplo, ajuste conforme a API
     };
 
     axios
-      .get(apiUrl, { headers, params })
+      .get(apiUrl, { headers })
       .then((response) => {
         const data = response.data.results;
         setPratosPrincipais(data);
@@ -39,6 +34,7 @@ function PratosPrincipais({ apiUrl }: PratosPrincipaisProps) {
 
   return (
     <div>
+      <h1>Pratos Principais</h1>
       {pratosPrincipais.map((prato, index) => (
         <div key={index}>
           <h2>{prato.name}</h2>

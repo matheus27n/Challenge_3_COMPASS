@@ -15,6 +15,32 @@
 .homepage__title{
     display: flex;
     flex-direction: column;
-    height: 40%;
+    height: 45%;
     width: 45%;
+    background-color: red;
+}
+
+.div_img{
+    display: flex;
+    flex-direction: row;
+    height: 90%;
+    width: 50%;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+}
+
+.image_1{
+    height: 60%;
+    width: 50%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.image_2{
+    height: 45%;
+    width: 35%;
+    object-fit: cover;
+    border-radius: 10px;
 }
