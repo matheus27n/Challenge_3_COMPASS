@@ -2,10 +2,12 @@ import styles from "./Homepage.module.css";
 import Header from "../../components/header/Header.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import Restaurante from "../../api/restaurantes/Restaurante.tsx";
+//import PratosPrincipais from "../../api/pratos/PratosPrincipais.tsx";
 
 
 function Homepage() {
-  const apiUrl = "https://parseapi.back4app.com/classes/FitMe"; // Use a URL da API aqui
+  const restauranteApiUrl  = "https://parseapi.back4app.com/classes/FitMe"; // Use a URL da API aqui
+  //const pratosApiUrl  = "https://parseapi.back4app.com/classes/Dish"; 
 
   return (
     <div className={styles.homepage}>
@@ -26,7 +28,7 @@ function Homepage() {
         </div>
       </div>
       {<h1>Restaurantes</h1>}
-      {<Restaurante apiUrl={apiUrl} />}
+      {<Restaurante apiUrl={restauranteApiUrl} />}
       {/*<h1>Lista de Pratos Principais</h1>*/}
       {/*<PratosPrincipais apiUrl={apiUrl} />*/}
       <Footer />

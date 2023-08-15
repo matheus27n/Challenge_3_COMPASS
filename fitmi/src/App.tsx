@@ -4,6 +4,7 @@ import Homepage from "../src/pages/homepage/Homepage.jsx";
 import Root from "../src/routers/Root";
 import Login from "../src/components/login/Login";
 import Register from "../src/components/register/Register";
+import ItensPage from '../src/pages/restaurantePage/ItensPage'
 
 
 const routes = [
@@ -13,8 +14,8 @@ const routes = [
     children: [
       { path: "/", element: <Homepage /> },
       { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register />}
-    
+      { path: "/register", element: <Register />},
+      { path: "/ItensPage", element: <ItensPage /> },
     ],
   },
 ];

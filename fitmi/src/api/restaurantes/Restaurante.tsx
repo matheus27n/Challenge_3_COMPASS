@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+//import {Link} from "react-router-dom";
 import axios from "axios";
 import styles from "./Restaurante.module.css";
 import restaurantImage1 from "../../assets/img/Rectangle 26 (1).png";
@@ -36,6 +37,7 @@ const restaurantImages = [
 ];
 
 function Restaurante({ apiUrl }: RestauranteProps) {
+  
   const itemsPerRow = 4;
 
   const [restaurantes, setRestaurantes] = useState<Restaurante[]>([]);
