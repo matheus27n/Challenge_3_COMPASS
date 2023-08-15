@@ -10,6 +10,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // Novo estado para mostrar/esconder senha
+  const [errorMessage, setErrorMessage] = useState(""); // Novo estado para exibir mensagem de erro
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,9 +23,18 @@ function Register() {
         "Content-Type": "application/json",
       };
 
+      // Verifica se o username ou email já estão em uso
+      const userExists = await checkUserExists(username, email);
+
+      if (userExists) {
+        setErrorMessage("Username or email already in use.");
+        return;
+      }
+
       const userData = {
         username,
         password,
+        email,
       };
 
       const response = await axios.post(
@@ -41,10 +51,36 @@ function Register() {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      setErrorMessage("");
       window.alert("Registro realizado com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
-      window.alert("Ocorreu um erro ao cadastrar. Verifique seus dados e tente novamente.");
+      window.alert(
+        "Ocorreu um erro ao cadastrar. Verifique seus dados e tente novamente."
+      );
+    }
+  };
+
+  // Função para verificar se o username ou email já estão em uso
+  const checkUserExists = async (username: string, email: string) => {
+    try {
+      const response = await axios.get(
+        `https://parseapi.back4app.com/users?where={"$or":[{"username":"${username}"},{"email":"${email}"}]}`,
+        {
+          headers: {
+            "X-Parse-Application-Id":
+              "lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh",
+            "X-Parse-REST-API-Key": "8aqUBWOjOplfA6lstntyYsYVkt3RzpVtb8qU5x08",
+            "X-Parse-Revocable-Session": "1",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data.results.length > 0; // Retorna true se existem resultados
+    } catch (error) {
+      console.error("Erro ao verificar usuário:", error);
+      return false; // Em caso de erro, assume que não existe
     }
   };
 
@@ -102,6 +138,7 @@ function Register() {
                 onChange={() => setShowPassword(!showPassword)}
               />
             </label>
+            <p className={styles.error}>{errorMessage}</p>
           </form>
           <button
             className={styles.form__button_register}

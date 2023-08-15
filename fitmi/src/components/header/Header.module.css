@@ -1,72 +1,102 @@
 /* Header.module.css */
 
 .header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  /* Alterando para uma coluna em telas menores */
+  align-items: center;
+  max-width: 1100px;
+  margin-top: 1rem;
+  padding: 0 2rem;
+  /* Reduzindo o padding para telas menores */
+  margin-left: auto;
+  margin-right: auto;
+  gap: 1rem;
+  /* Reduzindo o espaçamento entre os elementos */
+}
+
+.header__container__logo {
+  gap: 1rem;
+
+}
+
+.header__container {
+  display: flex;
+  flex-direction: column;
+  /* Alterando para uma coluna em telas menores */
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  /* Ocupando toda a largura */
+  height: auto;
+
+}
+
+.input {
+  display: flex;
+  width: 100%;
+  /* Ocupando toda a largura */
+  max-width: 260px;
+  height: 2rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+}
+
+.search__button {
+  width: 100%;
+  /* Ocupando toda a largura */
+  height: 2rem;
+  border-radius: 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.search__button:hover {
+  cursor: pointer;
+  transform: scale(0.95);
+  background-color: #333;
+}
+
+.logo {
+  align-items: flex-start;
+  width: 90px;
+  height: 30px;
+}
+
+/* Media Query */
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    /* Voltando para linha em telas maiores */
     align-items: center;
-    max-width: 1100px;
-    margin-top: 1rem;
-    padding: 0 1rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .header__container {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 15rem;
-    align-items: center;
-    gap: 1rem;
-    flex-grow: 1;
-    background-color: red;
-  }
-  
-  .input {
-    display: flex;
-    width: 100%;
-    max-width: 260px;
-    height: 2rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 0.25rem;
-  }
-  
-  .search__button {
-    width: 85px;
-    height: 2rem;
-    border-radius: 10px;
-    border: none;
-    background-color: black;
-    color: white;
-    font-weight: bold;
-    transition: transform 0.3s, background-color 0.3s;
-  }
-  
-  .search__button:hover {
-    cursor: pointer;
-    transform: scale(0.95);
-    background-color: #333;
+    /* Alinhando os itens ao centro */
+    gap: 15rem;
+    /* Restaurando o espaçamento original entre os elementos */
+    padding: 0 5rem;
+    /* Restaurando o padding original */
   }
 
-  .logo{
-    align-items: flex-start;
-    width:90px;
-    height: 30px;
+  .header__container {
+    flex-direction: row;
+    /* Voltando para linha em telas maiores */
+    align-items: center;
+    /* Alinhando os itens ao centro */
+    width: 20%;
+    /* Restaurando a largura original */
   }
-  
-  /* Media Queries */
-  
-  @media (min-width: 768px) {
-    .header {
-      margin-top: 2rem;
-    }
-    
-    .header__container {
-      gap: 2rem;
-    }
-    
-    .input {
-      max-width: 300px;
-    }
+
+  .search__button {
+    width: 85px;
+    /* Restaurando a largura original */
   }
-  
+
+  .input {
+    width: 15rem;
+    /* Restaurando a largura original */
+  }
+}

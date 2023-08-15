@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .homepage__content{
@@ -10,37 +11,59 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
+    padding: 4rem;
 }
 
 .homepage__title{
     display: flex;
     flex-direction: column;
     height: 45%;
-    width: 45%;
-    background-color: red;
+    width: 90%; 
+    max-width: 600px; 
+    border-radius: 10px; 
+    margin-bottom: 1rem;
+    padding: 1rem;
+
 }
+
+.homepage__title h1{
+    font-family: "Poppins", sans-serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 1rem;
+}
+.homepage__title p{
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 200;
+    color: black;
+    margin-bottom: 1rem;
+}
+
 
 .div_img{
     display: flex;
-    flex-direction: row;
+    flex-direction: row; /* Adjusted to column layout for responsiveness */
     height: 90%;
-    width: 50%;
+    width: 100%; /* Adjusted width for responsiveness */
     gap: 1rem;
     justify-content: center;
     align-items: center;
-    background-color: blue;
+    padding: 1rem; /* Added padding for spacing */
+    border-radius: 10px;
 }
 
 .image_1{
     height: 60%;
-    width: 50%;
+    width: 50%; /* Adjusted width for responsiveness */
     object-fit: cover;
     border-radius: 10px;
 }
 
 .image_2{
     height: 45%;
-    width: 35%;
+    width: 100%; /* Adjusted width for responsiveness */
     object-fit: cover;
     border-radius: 10px;
 }

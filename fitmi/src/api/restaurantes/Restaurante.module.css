@@ -3,6 +3,7 @@
 .Restaurantes_pratos {
     display: flex;
     justify-content: center;
+    padding: 2rem;
 
 
   }
@@ -21,11 +22,44 @@
   }
   
   .item {
+    background: #F8F8F8;
     margin: 0 10px;
     border: 1px solid #ccc;
     padding: 16px;
     flex: 1;
     max-width: calc(25% - 20px); /* 4 itens por linha com margens */
     border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  .item:hover {
+    transform: translateY(-10px);
+  }
+
+  img{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 50%;
+    margin: 0 auto;
+  }
+
+  h2{
+    font-family: "Poppins", sans-serif;
+    color: #000;
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 auto;
+  }
+
+  p{
+    font-family: "Poppins", sans-serif;
+    color: #000;
+    display: flex;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 auto;
   }
   

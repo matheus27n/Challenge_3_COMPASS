@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Restaurante.module.css";
+import restaurantImage1 from "../../assets/img/Rectangle 26 (1).png";
+import restaurantImage2 from "../../assets/img/Rectangle 26 (2).png";
+import restaurantImage3 from "../../assets/img/Rectangle 26 (3).png";
+import restaurantImage4 from "../../assets/img/Rectangle 26 (4).png";
+import restaurantImage5 from "../../assets/img/Rectangle 26 (5).png";
+import restaurantImage6 from "../../assets/img/Rectangle 26 (6).png";
+import restaurantImage7 from "../../assets/img/Rectangle 26 (7).png";
+import restaurantImage8 from "../../assets/img/Rectangle 26.png";
 
 interface Restaurante {
   name: string;
@@ -15,6 +23,17 @@ interface Restaurante {
 interface RestauranteProps {
   apiUrl: string;
 }
+
+const restaurantImages = [
+  restaurantImage1,
+  restaurantImage2,
+  restaurantImage3,
+  restaurantImage4,
+  restaurantImage5,
+  restaurantImage6,
+  restaurantImage7,
+  restaurantImage8,
+];
 
 function Restaurante({ apiUrl }: RestauranteProps) {
   const itemsPerRow = 4;
@@ -59,19 +78,16 @@ function Restaurante({ apiUrl }: RestauranteProps) {
           (_, rowIndex) => (
             <div key={rowIndex} className={styles.row}>
               {restaurantes
-                .slice(
-                  rowIndex * itemsPerRow,
-                  (rowIndex + 1) * itemsPerRow
-                )
+                .slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow)
                 .map((restaurante, index) => (
                   <div key={index} className={styles.item}>
+                    <img src={restaurantImages[index]} alt={restaurante.name} />
                     <h2>{restaurante.name}</h2>
+                    <p>Location: {restaurante.location}</p>
                     <p>Rating: {restaurante.rating}</p>
                     <p>Delivery Time: {restaurante.deliveryTime}</p>
                     <p>Expensive: {restaurante.isExpensive ? "Yes" : "No"}</p>
-                    <p>Location: {restaurante.location}</p>
-                    <p>Top Dishes: {restaurante.topDishes ? restaurante.topDishes.join(", ") : "No top dishes"}</p>
-                    <img src={restaurante.image} alt={restaurante.name} />
+                    {/*<p>Top Dishes: {restaurante.topDishes ? restaurante.topDishes.join(", ") : "No top dishes"}</p>*/}
                   </div>
                 ))}
             </div>
