@@ -1,42 +1,42 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import PratosPrincipais from "../../api/pratos/PratosPrincipais";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import PratosPrincipais from "../../api/pratos/PratosPrincipais"; // Importe o componente PratosPrincipais
+import styles from "./ItensPage.module.css";
 
 function ItensPage() {
-    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-    const [selectedRestaurantPratos, setSelectedRestaurantPratos] = useState([]);
-
-    const handleRestaurantClick = (restaurant) => {
-        setSelectedRestaurant(restaurant);
-        setSelectedRestaurantPratos(restaurant.pratosPrincipais); // Use o array de pratos principais do restaurante selecionado
-      };
+    const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish";
+    const restauranteApiUrl = "https://parseapi.back4app.com/classes/FitMe";
+  
+    const { restauranteId } = useParams();
       
   return (
     <>
       <Header />
-      <div className="itens_page">
-        <div className="itens_page_container">
-          <div className="item_principal">
+      <div className={styles.itens_page}>
+        <div className={styles.itens_page_container}>
+          <div className={styles.item_principal}>
             <img></img>
-            <div className="item_principal_info">
+            <div className={styles.item_principal_info}>
               <h1>Nome do item</h1>
               <p>Descrição do item</p>
               <p>Preço do item</p>
             </div>
-            <div className="ofeers">
+            <div className={styles.ofeers}>
               <h1>Ofertas</h1>
               <p>50% off up to ₹100 | Use code TRYNEW</p>
               <p>20% off | Use code PARTY</p>
             </div>
-          </div>
-          <div className="Search">
+             {/* Renderize o componente PratosPrincipais com o ID do restaurante */}
+             <PratosPrincipais apiUrl={pratosApiUrl} restauranteId={restauranteId} />      </div>
+          <div className={styles.search}>
             <input type="Search" placeholder="Search for dish"></input>
             <button>Favourite</button>
           </div>
         </div>
-        <div className="itens_page_dados">
-          <div className="itens_page_dados_ul">
+        <div className={styles.itens_page_dados}>
+          <div className={styles.itens_page_dados_ul}>
             <ul>
               <li>Recommended</li>
               <li>Breakfast Box</li>
@@ -45,7 +45,7 @@ function ItensPage() {
               <li>Biriyani Box</li>
             </ul>
           </div>
-          <div className="itens_page_dados_itens">
+          <div className={styles.itens_page_dados_itens}>
             <img></img>
             <h3>Brunch for 2 - Veg (Save upto Rs.45)</h3>
             <p>₹ 199</p>
@@ -55,9 +55,9 @@ function ItensPage() {
               lunchbox and 2 choco lava cakes. This is just bliss on a plate!
             </h4>
           </div>
-          <div className="itens_page_dados_card_lateral">
+          <div className={styles.itens_page_dados_card_lateral}>
             <img></img>
-            <div className="itens_page_dados_card_lateral_info">
+            <div className={styles.itens_page_dados_card_lateral_info}>
               <h1>Cart</h1>
               <h2>from Lunch Box</h2>
               <h5>Brunch for 2 - Veg (Save upto Rs.45)</h5>

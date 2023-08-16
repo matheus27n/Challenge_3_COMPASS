@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-//import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Certifique-se de importar o Link
 import axios from "axios";
 import styles from "./Restaurante.module.css";
 import restaurantImage1 from "../../assets/img/Rectangle 26 (1).png";
@@ -12,13 +12,14 @@ import restaurantImage7 from "../../assets/img/Rectangle 26 (7).png";
 import restaurantImage8 from "../../assets/img/Rectangle 26.png";
 
 interface Restaurante {
+  objectId: string; // Adicione a propriedade objectId
   name: string;
   rating: number;
   deliveryTime: string;
   isExpensive: boolean;
   location: string;
   image: string;
-  topDishes: string[]; // Atualize o tipo do topDishes para string[]
+  topDishes: string[];
 }
 
 interface RestauranteProps {
@@ -37,7 +38,6 @@ const restaurantImages = [
 ];
 
 function Restaurante({ apiUrl }: RestauranteProps) {
-  
   const itemsPerRow = 4;
 
   const [restaurantes, setRestaurantes] = useState<Restaurante[]>([]);
@@ -83,13 +83,15 @@ function Restaurante({ apiUrl }: RestauranteProps) {
                 .slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow)
                 .map((restaurante, index) => (
                   <div key={index} className={styles.item}>
-                    <img src={restaurantImages[index]} alt={restaurante.name} />
-                    <h2>{restaurante.name}</h2>
-                    <p>Location: {restaurante.location}</p>
-                    <p>Rating: {restaurante.rating}</p>
-                    <p>Delivery Time: {restaurante.deliveryTime}</p>
-                    <p>Expensive: {restaurante.isExpensive ? "Yes" : "No"}</p>
-                    {/*<p>Top Dishes: {restaurante.topDishes ? restaurante.topDishes.join(", ") : "No top dishes"}</p>*/}
+                    {/* Use o objectId como parâmetro na URL do Link */}
+                    <Link to={`/ItensPage/${restaurante.objectId}`}>
+                      <img src={restaurantImages[index]} alt={restaurante.name} />
+                      <h2>{restaurante.name}</h2>
+                      <p>Location: {restaurante.location}</p>
+                      <p>Rating: {restaurante.rating}</p>
+                      <p>Delivery Time: {restaurante.deliveryTime}</p>
+                      <p>Expensive: {restaurante.isExpensive ? "Yes" : "No"}</p>
+                    </Link>
                   </div>
                 ))}
             </div>

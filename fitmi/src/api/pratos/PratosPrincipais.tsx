@@ -6,13 +6,15 @@ interface PratoPrincipal {
   name: string;
   description: string;
   image: string;
+  restauranteId: string; // Certifique-se de adicionar essa propriedade
 }
 
 interface PratosPrincipaisProps {
   apiUrl: string;
+  restauranteId: string; // ID do restaurante para filtragem
 }
 
-function PratosPrincipais({ apiUrl }: PratosPrincipaisProps) {
+function PratosPrincipais({ apiUrl, restauranteId }: PratosPrincipaisProps) {
   const [pratosPrincipais, setPratosPrincipais] = useState<PratoPrincipal[]>([]);
 
   useEffect(() => {
@@ -21,8 +23,12 @@ function PratosPrincipais({ apiUrl }: PratosPrincipaisProps) {
       'X-Parse-REST-API-Key': '8aqUBWOjOplfA6lstntyYsYVkt3RzpVtb8qU5x08',
     };
 
+    const queryParams = {
+      where: JSON.stringify({ restauranteId }), // Filtra por restauranteId
+    };
+
     axios
-      .get(apiUrl, { headers })
+      .get(apiUrl, { headers, params: queryParams })
       .then((response) => {
         const data = response.data.results;
         setPratosPrincipais(data);
@@ -30,7 +36,7 @@ function PratosPrincipais({ apiUrl }: PratosPrincipaisProps) {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [apiUrl]);
+  }, [apiUrl, restauranteId]);
 
   return (
     <div>

@@ -15,7 +15,8 @@ const routes = [
       { path: "/", element: <Homepage /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register />},
-      { path: "/ItensPage", element: <ItensPage /> },
+      { path: "ItensPage/:restauranteId", element: <ItensPage />}
+
     ],
   },
 ];
