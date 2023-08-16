@@ -1,73 +1,66 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Footer from "../footer/Footer";
 import styles from "../login/Login.module.css";
-import { Link } from "react-router-dom";
-
-const LOGIN_API_URL = "https://parseapi.back4app.com/login"; // Certifique-se de ter o endpoint correto para autenticação
-const BACK4APP_GRAPHQL_ENDPOINT = "https://parseapi.back4app.com/graphql";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     try {
-      const loginHeaders = {
-        "X-Parse-Application-Id": "lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh",
-        "X-Parse-REST-API-Key": "8aqUBWOjOplfA6lstntyYsYVkt3RzpVtb8qU5x08",
+      const headers = {
+        "X-Parse-Application-Id": "DSiIkHz2MVbCZutKS7abtgrRVsiLNNGcs0L7VsNL",
+        "X-Parse-Master-Key": "0cpnqkSUKVkIDlQrNxameA6OmjxmrA72tsUMqVG9",
+        "X-Parse-Client-Key": "zXOqJ2k44R6xQqqlpPuizAr3rs58RhHXfU7Aj20V",
         "Content-Type": "application/json",
       };
 
-      const loginResponse = await axios.post(
-        LOGIN_API_URL,
-        {
-          username,
-          password,
-        },
-        {
-          headers: loginHeaders,
-        }
-      );
-
-      const sessionToken = loginResponse.data.sessionToken;
-
-      // Realizar consulta GraphQL após o login
-      const graphQLQuery = `
-        query GetUserQuery {
-          getUser {
-            objectId
-            username
-            email
+      const loginQuery = `
+        mutation LogIn($username: String!, $password: String!) {
+          logIn(input: { username: $username, password: $password }) {
+            viewer {
+              user {
+                id
+                createdAt
+              }
+              sessionToken
+            }
           }
         }
       `;
 
-      const graphQLHeaders = {
-        "X-Parse-Application-Id": "lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh",
-        "X-Parse-Session-Token": sessionToken,
-        "Content-Type": "application/json",
+      const variables = {
+        username,
+        password,
       };
 
-      const graphQLResponse = await axios.post(
-        BACK4APP_GRAPHQL_ENDPOINT,
-        { query: graphQLQuery },
-        { headers: graphQLHeaders }
+      const response = await axios.post(
+        "https://parseapi.back4app.com/graphql",
+        {
+          query: loginQuery,
+          variables: variables,
+        },
+        { headers }
       );
 
-      console.log("GraphQL response:", graphQLResponse.data);
+      console.log("Usuário logado:", response.data);
 
+      // Limpa os campos do formulário após o login
       setUsername("");
       setPassword("");
-      window.alert("Login successful!");
+      window.alert("Login realizado com sucesso!");
     } catch (error) {
-      console.error("Error logging in:", error);
-      window.alert("Login failed. Please check your credentials.");
+      console.error("Erro ao fazer login:", error);
     }
   };
+
+  
+
 
   return (
     <div className={styles.login}>
