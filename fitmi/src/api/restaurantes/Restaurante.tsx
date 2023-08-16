@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; // Certifique-se de importar o Link
 import axios from "axios";
 import styles from "./Restaurante.module.css";
@@ -24,6 +24,7 @@ interface Restaurante {
 
 interface RestauranteProps {
   apiUrl: string;
+  filtro: string; // Adicione a propriedade filtro
 }
 
 const restaurantImages = [
@@ -37,7 +38,7 @@ const restaurantImages = [
   restaurantImage8,
 ];
 
-function Restaurante({ apiUrl }: RestauranteProps) {
+function Restaurante({ apiUrl, filtro }: RestauranteProps) {
   const itemsPerRow = 4;
 
   const [restaurantes, setRestaurantes] = useState<Restaurante[]>([]);
@@ -73,13 +74,19 @@ function Restaurante({ apiUrl }: RestauranteProps) {
     return <p>{error}</p>;
   }
 
+  const restaurantesFiltrados = filtro
+    ? restaurantes.filter((restaurante) =>
+        restaurante.name.toLowerCase().includes(filtro.toLowerCase())
+      )
+    : restaurantes;
+
   return (
     <div className={styles.Restaurantes_pratos}>
       <div className={styles.Restaurantes_pratos_title}>
-        {[...Array(Math.ceil(restaurantes.length / itemsPerRow))].map(
+        {[...Array(Math.ceil(restaurantesFiltrados.length / itemsPerRow))].map(
           (_, rowIndex) => (
             <div key={rowIndex} className={styles.row}>
-              {restaurantes
+              {restaurantesFiltrados
                 .slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow)
                 .map((restaurante, index) => (
                   <div key={index} className={styles.item}>
