@@ -4,37 +4,68 @@ import Footer from "../footer/Footer";
 import styles from "../login/Login.module.css";
 import { Link } from "react-router-dom";
 
+const LOGIN_API_URL = "https://parseapi.back4app.com/login"; // Certifique-se de ter o endpoint correto para autenticação
+const BACK4APP_GRAPHQL_ENDPOINT = "https://parseapi.back4app.com/graphql";
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Novo estado para mostrar/esconder senha
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const headers = {
+      const loginHeaders = {
         "X-Parse-Application-Id": "lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh",
         "X-Parse-REST-API-Key": "8aqUBWOjOplfA6lstntyYsYVkt3RzpVtb8qU5x08",
-        "X-Parse-Revocable-Session": "1",
         "Content-Type": "application/json",
       };
 
-      const response = await axios.get(
-        `https://parseapi.back4app.com/login?username=${username}&password=${password}`,
+      const loginResponse = await axios.post(
+        LOGIN_API_URL,
         {
-          headers,
+          username,
+          password,
+        },
+        {
+          headers: loginHeaders,
         }
       );
 
-      console.log("Usuário logado:", response.data);
+      const sessionToken = loginResponse.data.sessionToken;
 
-      // Limpa os campos do formulário após o login
+      // Realizar consulta GraphQL após o login
+      const graphQLQuery = `
+        query GetUserQuery {
+          getUser {
+            objectId
+            username
+            email
+          }
+        }
+      `;
+
+      const graphQLHeaders = {
+        "X-Parse-Application-Id": "lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh",
+        "X-Parse-Session-Token": sessionToken,
+        "Content-Type": "application/json",
+      };
+
+      const graphQLResponse = await axios.post(
+        BACK4APP_GRAPHQL_ENDPOINT,
+        { query: graphQLQuery },
+        { headers: graphQLHeaders }
+      );
+
+      console.log("GraphQL response:", graphQLResponse.data);
+
       setUsername("");
       setPassword("");
-      window.alert("Login realizado com sucesso!");
+      window.alert("Login successful!");
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      console.error("Error logging in:", error);
+      window.alert("Login failed. Please check your credentials.");
     }
   };
 

@@ -40,7 +40,7 @@ function PratosPrincipais({ apiUrl, restauranteId }: PratosPrincipaisProps) {
 
   return (
     <div>
-      <h1>Pratos Principais</h1>
+      {/*<h1>Pratos Principais</h1>*/}
       {pratosPrincipais.map((prato, index) => (
         <div key={index}>
           <h2>{prato.name}</h2>

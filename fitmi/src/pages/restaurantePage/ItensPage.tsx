@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PratosPrincipais from "../../api/pratos/PratosPrincipais";
 import Header from "../../components/header/Header";
@@ -6,20 +6,21 @@ import Footer from "../../components/footer/Footer";
 import styles from "./ItensPage.module.css";
 
 function ItensPage() {
-    const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish";
-    const restauranteApiUrl = "https://parseapi.back4app.com/classes/FitMe";
-  
-    const { restauranteId } = useParams();
-      
+  const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish";
+
+  const { restauranteId } = useParams();
+
   return (
     <>
       <Header />
       <div className={styles.itens_page}>
         <div className={styles.itens_page_container}>
           <div className={styles.item_principal}>
-            <img></img>
+            <img src="..\src\assets\img\Rectangle 28.png"></img>
             <div className={styles.item_principal_info}>
-              <h1>Nome do item</h1>
+              <h1>LunchBox - Meals and Thalis</h1>
+            </div>
+            <div className={styles.infos}>
               <p>Descrição do item</p>
               <p>Preço do item</p>
             </div>
@@ -28,8 +29,7 @@ function ItensPage() {
               <p>50% off up to ₹100 | Use code TRYNEW</p>
               <p>20% off | Use code PARTY</p>
             </div>
-             {/* Renderize o componente PratosPrincipais com o ID do restaurante */}
-             <PratosPrincipais apiUrl={pratosApiUrl} restauranteId={restauranteId} />      </div>
+          </div>
           <div className={styles.search}>
             <input type="Search" placeholder="Search for dish"></input>
             <button>Favourite</button>
@@ -45,15 +45,25 @@ function ItensPage() {
               <li>Biriyani Box</li>
             </ul>
           </div>
+          <div className={styles.pratos_principais}>
+            {/* Renderize o componente PratosPrincipais com o ID do restaurante */}
+            {/*<PratosPrincipais*/}
+            {/* apiUrl={pratosApiUrl}*/}
+            {/*restauranteId={restauranteId}*/}
+            {/*/>*/}
+          </div>
           <div className={styles.itens_page_dados_itens}>
-            <img></img>
-            <h3>Brunch for 2 - Veg (Save upto Rs.45)</h3>
-            <p>₹ 199</p>
-            <h4>
-              Brunch: One meal to rule them all! Grab this mega saver combo with
-              your choice of 2 veg wraps, Aloo Paratha (2 pcs), chole and Curd
-              lunchbox and 2 choco lava cakes. This is just bliss on a plate!
-            </h4>
+            <div className={styles.itens_subpage}>
+              <h1>Brunch for 2 - Veg (Save upto Rs.45)</h1>
+              <p>₹ 199</p>
+              <h4>
+                Brunch: One meal to rule them all! Grab this mega saver combo with
+                your choice of 2 veg wraps, Aloo Paratha (2 pcs), chole and Curd
+                lunchbox and 2 choco lava cakes. This is just bliss on a plate!
+              </h4>
+            </div>
+            <img src="..\src\assets\img\Rectangle 28.png"></img>
+            <button>Add +</button>
           </div>
           <div className={styles.itens_page_dados_card_lateral}>
             <img></img>
