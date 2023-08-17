@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Footer from "../footer/Footer";
 import styles from "../login/Login.module.css";
 
@@ -9,7 +9,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async (e: { preventDefault: () => void; }) => {
+
+
+  const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
@@ -59,17 +61,16 @@ function Login() {
     }
   };
 
-  
-
-
   return (
     <div className={styles.login}>
       <div className={styles.login__container}>
-        <div className={styles.login__container__logo}>
-          <img className="logo" src="..\src\assets\img\Logo.png" alt="logo" />
-        </div>
+        <Link to="/">
+          <div className={styles.login__container__logo}>
+            <img className="logo" src="..\src\assets\img\Logo.png" alt="logo" />
+          </div>
+        </Link>
+        <h1>Login</h1>
         <div className={styles.login__container__form}>
-          <h1>Login</h1>
           <form className={styles.form}>
             <p>Username</p>
             <input

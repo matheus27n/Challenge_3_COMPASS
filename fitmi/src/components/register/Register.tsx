@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../footer/Footer";
 import styles from "../register/Register.module.css";
+import { Link } from "react-router-dom";
+
+interface SignUpInput {
+  username: string;
+  email: string;
+  fullName: string;
+  password: string;
+}
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -9,8 +17,8 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Novo estado para mostrar/esconder senha
-  const [errorMessage, setErrorMessage] = useState(""); // Novo estado para exibir mensagem de erro
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +31,6 @@ function Register() {
         "Content-Type": "application/json",
       };
 
-      // Verifica se o username ou email já estão em uso
       const userExists = await checkUserExists(username, email);
 
       if (userExists) {
@@ -31,21 +38,44 @@ function Register() {
         return;
       }
 
-      const userData = {
+      const userData: SignUpInput = {
         username,
-        password,
         email,
+        fullName,
+        password,
+      };
+
+
+
+      const registerQuery = `
+        mutation SignUp($userData: SignUpInput!) {
+          signUp(input: $userData) {
+            viewer {
+              user {
+                id
+                createdAt
+              }
+              sessionToken
+            }
+          }
+        }
+      `;
+
+      const variables = {
+        userData,
       };
 
       const response = await axios.post(
-        "https://parseapi.back4app.com/users",
-        userData,
+        "https://parseapi.back4app.com/graphql",
+        {
+          query: registerQuery,
+          variables: variables,
+        },
         { headers }
       );
 
       console.log("Usuário cadastrado:", response.data);
 
-      // Limpa os campos do formulário após o cadastro
       setFullName("");
       setUsername("");
       setEmail("");
@@ -61,7 +91,6 @@ function Register() {
     }
   };
 
-  // Função para verificar se o username ou email já estão em uso
   const checkUserExists = async (username: string, email: string) => {
     try {
       const response = await axios.get(
@@ -69,27 +98,29 @@ function Register() {
         {
           headers: {
             "X-Parse-Application-Id":
-              "lrAPveloMl57TTby5U0S4rFPBrANkAhLUll8jFOh",
-            "X-Parse-REST-API-Key": "8aqUBWOjOplfA6lstntyYsYVkt3RzpVtb8qU5x08",
-            "X-Parse-Revocable-Session": "1",
+              "DSiIkHz2MVbCZutKS7abtgrRVsiLNNGcs0L7VsNL",
+            "X-Parse-Master-Key": "0cpnqkSUKVkIDlQrNxameA6OmjxmrA72tsUMqVG9",
+            "X-Parse-Client-Key": "zXOqJ2k44R6xQqqlpPuizAr3rs58RhHXfU7Aj20V",
             "Content-Type": "application/json",
           },
         }
       );
 
-      return response.data.results.length > 0; // Retorna true se existem resultados
+      return response.data.results.length > 0;
     } catch (error) {
       console.error("Erro ao verificar usuário:", error);
-      return false; // Em caso de erro, assume que não existe
+      return false;
     }
   };
 
   return (
     <div className={styles.register}>
       <div className={styles.register__container}>
+        <Link to="/">
         <div className={styles.register__container__logo}>
-          <img className="logo" src="..\src\assets\img\Logo.png" alt="logo" />
+          <img className="logo" src="../src/assets/img/Logo.png" alt="logo" />
         </div>
+        </Link>
         <div className={styles.register__container__form}>
           <h1>Register</h1>
           <form className={styles.form_register}>

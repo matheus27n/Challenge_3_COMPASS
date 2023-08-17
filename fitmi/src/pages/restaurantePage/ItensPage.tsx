@@ -1,31 +1,65 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import PratosPrincipais from "../../api/pratos/PratosPrincipais";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom"; // Importe o hook useParams
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import styles from "./ItensPage.module.css";
+import PratosPrincipais from "../../api/pratos/PratosPrincipais";
+import axios from "axios";
 
 function ItensPage() {
+  const restauranteApiUrl = "https://parseapi.back4app.com/classes/FitMe";
   const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish";
+  
+  const { restauranteId } = useParams(); // Obtenha o ID do restaurante da URL
 
-  const { restauranteId } = useParams();
+  const [restaurante, setRestaurante] = useState({
+    name: "",
+    address: "",
+    description: "",
+    pratos: [],
+  });
+
+  useEffect(() => {
+    const fetchRestauranteData = async () => {
+      try {
+        const headers = {
+          "X-Parse-Application-Id": "DSiIkHz2MVbCZutKS7abtgrRVsiLNNGcs0L7VsNL",
+          "X-Parse-Master-Key": "0cpnqkSUKVkIDlQrNxameA6OmjxmrA72tsUMqVG9",
+          "X-Parse-Client-Key": "zXOqJ2k44R6xQqqlpPuizAr3rs58RhHXfU7Aj20V",
+          "Content-Type": "application/json",
+        };
+
+        const response = await axios.get(`${restauranteApiUrl}/${restauranteId}`, {
+          headers,
+        });
+
+        setRestaurante(response.data);
+      } catch (error) {
+        console.error("Error fetching restaurant data:", error);
+      }
+    };
+
+    fetchRestauranteData();
+  }, [restauranteId]); // Certifique-se de incluir restauranteId como dependência
+
 
   return (
     <>
-      <Header />
+      <Header setFiltro={() => {}} />
       <div className={styles.itens_page}>
         <div className={styles.itens_page_container}>
           <div className={styles.item_principal}>
             <img src="..\src\assets\img\Rectangle 28.png"></img>
             <div className={styles.item_principal_info}>
-              <h1>LunchBox - Meals and Thalis</h1>
+            <h1>{restaurante.name}</h1>
             </div>
             <div className={styles.infos}>
-              <p>Descrição do item</p>
-              <p>Preço do item</p>
+              <p>{restaurante.location}</p>
+              <p>Rating: {restaurante.rating}</p>
+              <p>Delivery Time: {restaurante.deliveryTime}</p>
             </div>
             <div className={styles.ofeers}>
-              <h1>Ofertas</h1>
+              <h1>Offeers</h1>
               <p>50% off up to ₹100 | Use code TRYNEW</p>
               <p>20% off | Use code PARTY</p>
             </div>
@@ -45,39 +79,28 @@ function ItensPage() {
               <li>Biriyani Box</li>
             </ul>
           </div>
-          <div className={styles.pratos_principais}>
-            {/* Renderize o componente PratosPrincipais com o ID do restaurante */}
-            {/*<PratosPrincipais*/}
-            {/* apiUrl={pratosApiUrl}*/}
-            {/*restauranteId={restauranteId}*/}
-            {/*/>*/}
-          </div>
           <div className={styles.itens_page_dados_itens}>
             <div className={styles.itens_subpage}>
-              <h1>Brunch for 2 - Veg (Save upto Rs.45)</h1>
-              <p>₹ 199</p>
-              <h4>
-                Brunch: One meal to rule them all! Grab this mega saver combo with
-                your choice of 2 veg wraps, Aloo Paratha (2 pcs), chole and Curd
-                lunchbox and 2 choco lava cakes. This is just bliss on a plate!
-              </h4>
+              <h1>nome</h1>
+              <p>preço</p>
+              <p>descrição</p>
             </div>
-            <img src="..\src\assets\img\Rectangle 28.png"></img>
-            <button>Add +</button>
+              <img src="..\src\assets\img\Rectangle 28.png"></img>
+              <button>Add +</button>
           </div>
           <div className={styles.itens_page_dados_card_lateral}>
             <img></img>
             <div className={styles.itens_page_dados_card_lateral_info}>
               <h1>Cart</h1>
-              <h2>from Lunch Box</h2>
-              <h5>Brunch for 2 - Veg (Save upto Rs.45)</h5>
-              <p>₹ 199</p>
+              <h2>from NAME DO RESTAURANTE</h2>
+              <h5>NOME DO PRATO</h5>
+              <p>PREÇO DO PRATO</p>
 
-              <h2>from Fasso</h2>
-              <h5>Brunch for 2 - Veg (Save upto Rs.45)</h5>
-              <p>₹ 199</p>
+              <h2>from NAME DE OUTRO SE TIVER RESTAURANTE</h2>
+              <h5>NOME DO PRATO</h5>
+              <p>PREÇO DO PRATO</p>
 
-              <h1>Subtotal</h1>
+              <h1>Subtotal + PREÇO TOTAL DAS COMPRAS DOS PRATOS</h1>
               <p>Extra charges may apply</p>
 
               <button>Checkout</button>

@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: auto;
+  height: 100vh;
 }
 
 .login__container__logo {
@@ -14,10 +14,36 @@
   margin-bottom: 1rem;
 }
 
+.login__container h1 {
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-left: -16rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.login__container__logo img {
+  display: flex;
+  margin-left: -17rem;
+  margin-top: 2rem;
+  width: 50%;
+  transition: 0.3s;
+}
+
+.login__container__logo img:hover {
+  cursor: pointer;
+  transform: scale(0.95);
+}
+
 .login__container__form {
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
+  justify-content: center;
   width: 80%;
   max-width: 400px;
   text-align: center;
