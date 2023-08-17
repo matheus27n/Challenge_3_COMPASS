@@ -12,6 +12,7 @@ function Header({ setFiltro }: HeaderProps) {
 
   return (
     <div className={styles.header}>
+      <Link to="/">
       <div className={styles.header__container__logo}>
         <img
           className={styles.logo}
@@ -19,6 +20,7 @@ function Header({ setFiltro }: HeaderProps) {
           alt="logo"
         />
       </div>
+      </Link>
       <div className={styles.header__container}>
         <input
           className={styles.input}

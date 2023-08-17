@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Importe o hook useParams
+import { useParams } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import styles from "./ItensPage.module.css";
-import PratosPrincipais from "../../api/pratos/PratosPrincipais";
 import axios from "axios";
+import PratosPrincipais from "../../api/pratos/PratosPrincipais";
 
 function ItensPage() {
   const restauranteApiUrl = "https://parseapi.back4app.com/classes/FitMe";
-  const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish";
-  
-  const { restauranteId } = useParams(); // Obtenha o ID do restaurante da URL
+  const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish"; // Use the GraphQL API URL
+
+  const { restauranteId } = useParams();
 
   const [restaurante, setRestaurante] = useState({
     name: "",
@@ -18,6 +18,8 @@ function ItensPage() {
     description: "",
     pratos: [],
   });
+
+  const [pratosPrincipais, setPratosPrincipais] = useState([]);
 
   useEffect(() => {
     const fetchRestauranteData = async () => {
@@ -29,9 +31,12 @@ function ItensPage() {
           "Content-Type": "application/json",
         };
 
-        const response = await axios.get(`${restauranteApiUrl}/${restauranteId}`, {
-          headers,
-        });
+        const response = await axios.get(
+          `${restauranteApiUrl}/${restauranteId}`,
+          {
+            headers,
+          }
+        );
 
         setRestaurante(response.data);
       } catch (error) {
@@ -40,8 +45,57 @@ function ItensPage() {
     };
 
     fetchRestauranteData();
-  }, [restauranteId]); // Certifique-se de incluir restauranteId como dependência
+  }, [restauranteId]);
 
+  useEffect(() => {
+    const fetchPratosPrincipais = async () => {
+      try {
+        const headers = {
+          "X-Parse-Application-Id": "DSiIkHz2MVbCZutKS7abtgrRVsiLNNGcs0L7VsNL",
+          "X-Parse-Master-Key": "0cpnqkSUKVkIDlQrNxameA6OmjxmrA72tsUMqVG9",
+          "X-Parse-Client-Key": "zXOqJ2k44R6xQqqlpPuizAr3rs58RhHXfU7Aj20V",
+          "Content-Type": "application/json",
+        };
+
+        const query = `
+          query PratosPrincipaisQuery($restauranteId: String!) {
+            pratos_principais(where: { restauranteId: $restauranteId }) {
+              price
+              name
+              description
+              image
+              restauranteId
+            }
+          }
+        `;
+
+        const variables = {
+          restauranteId: restauranteId,
+        };
+
+        const requestBody = {
+          query: query,
+          variables: variables,
+        };
+
+        const response = await axios.post(pratosApiUrl, requestBody, {
+          headers,
+        });
+
+        if (response.data.errors) {
+          console.error("GraphQL error:", response.data.errors);
+          return;
+        }
+
+        const data = response.data.data.pratos_principais;
+        setPratosPrincipais(data.slice(0, 3)); // Get the first 3 pratos
+      } catch (error) {
+        console.error("Error fetching pratos data:", error);
+      }
+    };
+
+    fetchPratosPrincipais();
+  }, [pratosApiUrl, restauranteId]);
 
   return (
     <>
@@ -51,7 +105,7 @@ function ItensPage() {
           <div className={styles.item_principal}>
             <img src="..\src\assets\img\Rectangle 28.png"></img>
             <div className={styles.item_principal_info}>
-            <h1>{restaurante.name}</h1>
+              <h1>{restaurante.name}</h1>
             </div>
             <div className={styles.infos}>
               <p>{restaurante.location}</p>
@@ -66,7 +120,7 @@ function ItensPage() {
           </div>
           <div className={styles.search}>
             <input type="Search" placeholder="Search for dish"></input>
-            <button>Favourite</button>
+            <button>Favorite</button>
           </div>
         </div>
         <div className={styles.itens_page_dados}>
@@ -81,9 +135,7 @@ function ItensPage() {
           </div>
           <div className={styles.itens_page_dados_itens}>
             <div className={styles.itens_subpage}>
-              <h1>nome</h1>
-              <p>preço</p>
-              <p>descrição</p>
+            {/*<PratosPrincipais apiUrl={pratosApiUrl} />*/}
             </div>
               <img src="..\src\assets\img\Rectangle 28.png"></img>
               <button>Add +</button>

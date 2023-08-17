@@ -31,7 +31,7 @@ function Homepage() {
         </div>
       </div>
       {<h1>Restaurantes</h1>}
-      { <Restaurante apiUrl={restauranteApiUrl} filtro={filtro} /> }
+       <Restaurante apiUrl={restauranteApiUrl} filtro={filtro} /> 
       {/*<h1>Lista de Pratos Principais</h1>*/}
       {/*<PratosPrincipais apiUrl={pratosApiUrl}/>*/}
       <Footer />

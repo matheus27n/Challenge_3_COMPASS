@@ -70,10 +70,9 @@
 @media (min-width: 768px) {
   .header {
     flex-direction: row;
-    /* Voltando para linha em telas maiores */
     align-items: center;
     /* Alinhando os itens ao centro */
-    gap: 15rem;
+    gap: 45rem;
     /* Restaurando o espaçamento original entre os elementos */
     padding: 0 5rem;
     /* Restaurando o padding original */
