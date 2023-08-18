@@ -5,10 +5,9 @@ import Footer from "../../components/footer/Footer";
 import styles from "./ItensPage.module.css";
 import axios from "axios";
 import PratosPrincipais from "../../api/pratos/PratosPrincipais";
-import porcetangem from '../../assets/img/Vector1.png'
+import porcetangem from "../../assets/img/Vector1.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 function ItensPage() {
   const restauranteApiUrl = "https://parseapi.back4app.com/graphql";
@@ -193,104 +192,115 @@ function ItensPage() {
       });
     }
   };
-  
 
   return (
     <>
-      <Header setFiltro={() => {}}/>
+      <Header setFiltro={() => {}} />
       <div className={styles.container}>
-      <ToastContainer />
-      <div className={styles.itens_page}>
-        <div className={styles.itens_page_container}>
-          <div className={styles.item_principal}>
-            <img src="..\src\assets\img\Rectangle 28.png" alt="Restaurant" />
-            <div className={styles.item_principal_info}>
-              <h1>{restaurante.name}</h1>
-              <p>{restaurante.location}</p>
-            </div>
-            <div className={styles.item_principal_info2}>
-              <div className={styles.infos}>
-                <p>Rating: {restaurante.rating}</p>
-                <p>100+ ratings</p>
+        <ToastContainer />
+        <div className={styles.itens_page}>
+          <div className={styles.itens_page_container}>
+            <div className={styles.item_principal}>
+              <img src="..\src\assets\img\Rectangle 28.png" alt="Restaurant" />
+              <div className={styles.item_principal_info}>
+                <h1 className={styles.name_style}>{restaurante.name}</h1>
+                <p>{restaurante.location}</p>
               </div>
-              <div className={styles.infos_time}>
-                <p>{restaurante.deliveryTime}</p>
-                <p>Delivery Time</p>
+              <div className={styles.item_principal_info2}>
+                <div className={styles.infos}>
+                  <p>Rating: {restaurante.rating}</p>
+                  <p>100+ ratings</p>
+                </div>
+                <div className={styles.infos_time}>
+                  <p>{restaurante.deliveryTime}</p>
+                  <p>Delivery Time</p>
+                </div>
+                <div className={styles.infos_price}>
+                  <p>₹200</p>
+                  <p>Cost for two</p>
+                </div>
               </div>
-              <div className={styles.infos_price}>
-                <p>₹200</p>
-                <p>Cost for two</p>
+              <div className={styles.ofeers}>
+                <h1>Offeers</h1>
+                <p>
+                  <img src={porcetangem}></img>50% off up to ₹100 | Use code
+                  TRYNEW
+                </p>
+                <p>
+                  <img src={porcetangem}></img>20% off | Use code PARTY
+                </p>
               </div>
-            </div>
-            <div className={styles.ofeers}>
-              <h1>Offeers</h1>
-              <p><img src={porcetangem}></img>50% off up to ₹100 | Use code TRYNEW</p>
-              <p><img src={porcetangem}></img>20% off | Use code PARTY</p>
             </div>
           </div>
-        </div>
-        <div className={styles.search}>
-          <input type="Search" placeholder="Search for dish" />
-          <button>Favorito</button>
-        </div>
-        <div className={styles.itens_page_dados}>
-          <div className={styles.itens_page_dados_ul}>
-            <ul>
-              <li>Recommended</li>
-              <li>Breakfast Box</li>
-              <li>Lunch Box</li>
-              <li>Combo Box</li>
-              <li>Biriyani Box</li>
-            </ul>
+          <div className={styles.search}>
+            <input type="Search" placeholder="Search for dish" />
+            <button>Favorito</button>
           </div>
-          <div className={styles.itens_page_dados_itens}>
-            <div className={styles.itens_subpage}>
-              <PratosPrincipais
-                apiUrl={pratosApiUrl}
-                restauranteId={restauranteId}
-                addToCart={addToCart}
-              />
+          <div className={styles.itens_page_dados}>
+            <div className={styles.itens_page_dados_ul}>
+              <ul>
+                <li>Recommended</li>
+                <li>Breakfast Box</li>
+                <li>Lunch Box</li>
+                <li>Combo Box</li>
+                <li>Biriyani Box</li>
+              </ul>
             </div>
-          </div>
-          <div className={styles.itens_page_dados_card_lateral}>
-            <div className={styles.itens_page_dados_card_lateral_info}>
-              <h1>Cart</h1>
-              <h2>from {restaurante.name}</h2>
-              {cartItems.map((item, index) => (
-                <div key={index} className={styles.cart_item}>
-                  <p>{item.name}</p>
-                  <p>{item.price}</p>
-                  <div className={styles.item_controls}>
-                    <button onClick={() => removeFromCart(item)}>−</button>
-                    <span className={styles.quantity_display}>
-                      {item.quantity || 1}
-                    </span>
-                    <button
-                      className={styles.plus_button}
-                      onClick={() =>
-                        addToCart({
-                          ...item,
-                          quantity: (item.quantity || 1) + 1,
-                        })
-                      }
-                    >
-                      +
-                    </button>
+            <div className={styles.itens_page_dados_itens}>
+              <div className={styles.itens_subpage}>
+                <PratosPrincipais
+                  apiUrl={pratosApiUrl}
+                  restauranteId={restauranteId}
+                  addToCart={addToCart}
+                />
+              </div>
+            </div>
+            <div className={styles.itens_page_dados_card_lateral}>
+              <div className={styles.itens_page_dados_card_lateral_info}>
+                <h1>Cart</h1>
+                <h2>
+                  from <h2 className={styles.name_style}>{restaurante.name}</h2>
+                </h2>
+                {cartItems.map((item, index) => (
+                  <div key={index} className={styles.cart_item}>
+                    <p>{item.name}</p>
+                    <p>${item.price}</p>
+                    <div className={styles.item_controls}>
+                      <button onClick={() => removeFromCart(item)}>−</button>
+                      <span className={styles.quantity_display}>
+                        {item.quantity || 1}
+                      </span>
+                      <button
+                        className={styles.plus_button}
+                        onClick={() =>
+                          addToCart({
+                            ...item,
+                            quantity: (item.quantity || 1) + 1,
+                          })
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {cartItems.length > 0 && (
-                <div className={styles.cart_subtotal}>
-                  <h2>Subtotal</h2>
-                  <p>₹{calculateTotalPrice().totalPrice}</p>
-                </div>
-              )}
-              <p>Total items: {calculateTotalPrice().totalQuantity}</p>
-              <button className={styles.checkout_button} onClick={handleCheckout}>Checkout</button>
+                ))}
+                {cartItems.length > 0 && (
+                  <div className={styles.cart_subtotal}>
+                    <h2>Subtotal</h2>
+                    <p>${calculateTotalPrice().totalPrice}</p>
+                  </div>
+                )}
+                <p>Total itens: {calculateTotalPrice().totalQuantity}</p>
+                <button
+                  className={styles.checkout_button}
+                  onClick={handleCheckout}
+                >
+                  Checkout
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
       <Footer />
     </>

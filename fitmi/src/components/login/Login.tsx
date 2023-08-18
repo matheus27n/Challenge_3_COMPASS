@@ -1,10 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../footer/Footer";
 import styles from "../login/Login.module.css";
 
 function Login() {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -71,6 +72,7 @@ function Login() {
       setUsername("");
       setPassword("");
       window.alert("Login realizado com sucesso!");
+      navigate("/");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     }

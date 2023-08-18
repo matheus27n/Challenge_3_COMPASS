@@ -26,13 +26,13 @@
 }
 
 .homepage__title img {
-    height: 40px; /* Ajuste a altura conforme necessário */
+    height: 40px; 
     width: auto;
     object-fit: cover;
     border-radius: 10px;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-    display: inline-block; /* Exibir as imagens em linha */
+    display: inline-block; 
   }
 
 .homepage__title h1{
@@ -53,26 +53,26 @@
 
 .div_img{
     display: flex;
-    flex-direction: row; /* Adjusted to column layout for responsiveness */
+    flex-direction: row; 
     height: 90%;
-    width:40rem; /* Adjusted width for responsiveness */
+    width:40rem;
     gap: 1rem;
     justify-content: center;
     align-items: center;
-    padding: 0rem; /* Added padding for spacing */
+    padding: 0rem; 
     border-radius: 10px;
 }
 
 .image_1{
     height: 60%;
-    width: 40%; /* Adjusted width for responsiveness */
+    width: 40%; 
     object-fit: cover;
     border-radius: 10px;
 }
 
 .image_2{
     height: 45%;
-    width: 50%; /* Adjusted width for responsiveness */
+    width: 50%; 
     object-fit: cover;
     border-radius: 10px;
 }
@@ -84,4 +84,75 @@
     color: black;
     margin-bottom: 1rem;
     margin-left: 5rem;
+}
+
+.homepage h6{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 1rem;
+    margin-left: 10rem;
+}
+
+@media screen and (max-width: 830px) {
+    .homepage__content {
+        height: auto; 
+        padding: 2rem; 
+    }
+
+    .homepage h6 {
+        font-size: 1.2rem; 
+        margin-left: 0; 
+    }
+}
+
+@media screen and (max-width: 615px){
+    .homepage__content{
+        flex-direction: column;
+        height: auto;
+        padding: 2rem;
+    }
+
+    .homepage__title{
+        height: auto;
+        width: 90%;
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    .homepage__title h1{
+        font-size: 2.5rem;
+    }
+
+    .homepage__title p{
+        font-size: 1rem;
+    }
+
+    .div_img{
+        flex-direction: column;
+        height: auto;
+        width: 90%;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        padding: 0rem;
+    }
+
+    .image_1{
+        display: none;
+    }
+
+    .image_2{
+        display: none;
+    }
+
+    .homepage h6{
+        font-size: 1.2rem;
+        margin-left: 0;
+    }
 }

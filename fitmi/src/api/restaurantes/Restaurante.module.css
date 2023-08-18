@@ -17,6 +17,13 @@
   margin-bottom: 20px;
 }
 
+.img_card{
+  width: 80%;
+  height: auto;
+  border-radius: 10px;
+  margin-left: 2rem;
+}
+
 .item {
   background: #F8F8F8;
   margin: 0 5px; /* Reduzida a margem */
@@ -33,12 +40,28 @@
   transform: translateY(-5px); /* Reduzido o deslocamento no hover */
 }
 
-img {
-  display: block; /* Alterado para "block" para centralizar melhor a imagem */
-  width: 80%;
-  height: auto; /* Ajustado o tamanho da imagem de acordo com a largura */
+.span{
+  font-family: "Poppins", sans-serif;
+  color: #808080;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
   margin: 0 auto;
+  margin-left: 0rem;
 }
+.time{
+  font-family: "Poppins", sans-serif;
+  color: black;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 auto;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 
 h2{
   font-family: "Poppins", sans-serif;
@@ -57,3 +80,23 @@ p{
   font-weight: 400;
   margin: 0 auto;
 }
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+  .Restaurantes_pratos {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .row {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .item {
+    margin: 5px 0;
+    max-width: 100%;
+  }
+}
+

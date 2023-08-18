@@ -14,7 +14,7 @@
 .itens_page_container {
     margin-top: 3rem;
     width: 100%;
-    height: auto;
+    height: 14rem;
     background: #202020;
 }
 
@@ -23,7 +23,7 @@
     flex-direction: row;
     justify-content: center;
     width: 30rem;
-    margin-left: 50rem;
+    margin-left: 52rem;
     margin-top: 0.5rem;
     color: white;
     gap: 3rem;
@@ -55,9 +55,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-left: 40rem;
+    margin-left: 42rem;
     width: 35rem;
-    margin-top: -7rem;
+    margin-top: -10rem;
     color: white;
 }
 
@@ -77,7 +77,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: -10rem;
+    margin-top: -9rem;
     margin-left: 119rem;
     width: 19rem;
     height: 10rem;
@@ -129,17 +129,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 10rem;
+    width: 15rem;
     margin-left: -2rem;
     height: auto;
     border-right:  1px solid #202020;
 }
 
 .itens_page_dados_ul li{
+    font-size: 20px;
     list-style: none;
-    margin-top: 1rem;
+    margin-top: 2rem;
     transition: 0.3s;
     cursor: pointer;
+}
+
+.name_style{
+    color: #fc8019; 
 }
 
 .itens_page_dados_ul li:hover{
@@ -152,6 +157,7 @@
     width: 40rem;
     height: 50%;
 }
+
 
 .itens_subpage h1{
     margin-top: 0rem;

@@ -10,6 +10,8 @@ import restaurantImage5 from "../../assets/img/Rectangle 26 (5).png";
 import restaurantImage6 from "../../assets/img/Rectangle 26 (6).png";
 import restaurantImage7 from "../../assets/img/Rectangle 26 (7).png";
 import restaurantImage8 from "../../assets/img/Rectangle 26.png";
+import estrela from '../../assets/img/Vector (2).png'
+import emoji from '../../assets/img/Vector (3).png'
 
 interface Restaurante {
   objectId: string;
@@ -128,10 +130,10 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
                 .map((restaurante, index) => (
                   <div key={index} className={styles.item}>
                     <Link to={`/ItensPage/${restaurante.objectId}`}>
-                      <img src={restaurantImages[index]} alt={restaurante.name} />
+                      <img className={styles.img_card}src={restaurantImages[index]} alt={restaurante.name} />
                       <h2>{restaurante.name}</h2>
-                      <p> <span>sout indie</span>estrela {restaurante.rating}</p>
-                      <p>emoji {restaurante.deliveryTime}</p>
+                      <p> <span className={styles.span}>sout indie</span><img src={estrela}></img> {restaurante.rating}</p>
+                      <p className={styles.time}><img src={emoji}></img> {restaurante.deliveryTime}</p>
         
                     </Link>
                   </div>

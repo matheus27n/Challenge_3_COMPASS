@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styles from "../header/Header.module.css";
 import { Link } from "react-router-dom";
 
@@ -6,23 +7,28 @@ interface HeaderProps {
 }
 
 function Header({ setFiltro }: HeaderProps) {
-  
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleFiltroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiltro(event.target.value); // Atualize o filtro com o valor do input
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <div className={styles.header}>
       <Link to="/">
-      <div className={styles.header__container__logo}>
-        <img
-          className={styles.logo}
-          src="..\src\assets\img\Logo.png"
-          alt="logo"
-        />
-      </div>
+        <div className={styles.header__container__logo}>
+          <img
+            className={styles.logo}
+            src="..\src\assets\img\Logo.png"
+            alt="logo"
+          />
+        </div>
       </Link>
-      <div className={styles.header__container}>
+      <div className={`${styles.header__container} ${menuOpen ? styles.menu_open : ''}`}>
         <input
           className={styles.input}
           type="text"
@@ -40,6 +46,12 @@ function Header({ setFiltro }: HeaderProps) {
           </button>
         </Link>
       </div>
+      <div className={styles.menu_hamburguer} onClick={toggleMenu}>
+        <img src="..\src\assets\img\menu-hamburguer.png" alt="menu" />
+      </div>
+      {menuOpen && (
+        <div className={styles.overlay} onClick={toggleMenu}></div>
+      )}
     </div>
   );
 }

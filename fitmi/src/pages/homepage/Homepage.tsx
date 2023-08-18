@@ -30,7 +30,7 @@ function Homepage() {
           <img className={styles.image_2} src="..\src\assets\img\Rectangle 2.png" alt='img2'></img>
         </div>
       </div>
-      {<h1>Restaurants</h1>}
+      {<h6>Restaurants</h6>}
        <Restaurante apiUrl={apiUrl} filtro={filtro} />
       <Footer />
     </div>
