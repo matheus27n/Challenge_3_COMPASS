@@ -6,8 +6,9 @@ interface HeaderProps {
 }
 
 function Header({ setFiltro }: HeaderProps) {
+  
   const handleFiltroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFiltro(event.target.value);
+    setFiltro(event.target.value); // Atualize o filtro com o valor do input
   };
 
   return (

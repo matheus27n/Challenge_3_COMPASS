@@ -7,8 +7,8 @@ import axios from "axios";
 import PratosPrincipais from "../../api/pratos/PratosPrincipais";
 
 function ItensPage() {
-  const restauranteApiUrl = "https://parseapi.back4app.com/classes/FitMe";
-  const pratosApiUrl = "https://parseapi.back4app.com/classes/Dish"; // Use the GraphQL API URL
+  const restauranteApiUrl = "https://parseapi.back4app.com/graphql";
+  const pratosApiUrl = "https://parseapi.back4app.com/graphql"; // Use the GraphQL API URL
 
   const { restauranteId } = useParams();
 
@@ -33,11 +33,40 @@ function ItensPage() {
           "Content-Type": "application/json",
         };
 
-        const response = await axios.get(`${restauranteApiUrl}/${restauranteId}`, {
-          headers,
-        });
+        const response = await axios.post(
+          restauranteApiUrl,
+          {
+            query: `
+            query GetRestaurantById{
+              fitMe(id: "${restauranteId}") {
+                name
+                location
+                rating
+                deliveryTime
+              }
+            }
+          `,
+            variables: {
+              id: restauranteId,
+            },
+          },
+          {
+            headers,
+          }
+        );
 
-        setRestaurante(response.data);
+        if (response.data.errors) {
+          console.error("GraphQL error:", response.data.errors);
+          return;
+        }
+
+        const restauranteData = response.data.data.fitMe;
+        setRestaurante({
+          name: restauranteData.name,
+          location: restauranteData.location,
+          rating: restauranteData.rating,
+          deliveryTime: restauranteData.deliveryTime,
+        });
       } catch (error) {
         console.error("Error fetching restaurant data:", error);
       }
@@ -55,47 +84,91 @@ function ItensPage() {
           "X-Parse-Client-Key": "zXOqJ2k44R6xQqqlpPuizAr3rs58RhHXfU7Aj20V",
           "Content-Type": "application/json",
         };
-  
+
         const query = `
-          query PratosPrincipaisQuery($restauranteId: String!) {
-            pratos_principais(where: { restauranteId: $restauranteId }) {
-              price
-              name
-              description
-              image
-              restauranteId
+          query GetRestaurantById($restauranteId: ID!) {
+            fitMe(id: $restauranteId) {
+              topDishes {
+                name
+                price
+                description
+                image
+              }
             }
           }
         `;
-  
+
         const variables = {
           restauranteId: restauranteId,
         };
-  
+
         const requestBody = {
           query: query,
           variables: variables,
         };
-  
+
         const response = await axios.post(pratosApiUrl, requestBody, {
           headers,
         });
-  
+
         if (response.data.errors) {
           console.error("GraphQL error:", response.data.errors);
           return;
         }
-  
-        const data = response.data.data.pratos_principais; // Access directly without 'results'
+
+        const data = response.data.data.fitMe.topDishes;
         setPratosPrincipais(data.slice(0, 3)); // Get the first 3 pratos
       } catch (error) {
         console.error("Error fetching pratos data:", error);
       }
     };
-  
+
     fetchPratosPrincipais();
   }, [pratosApiUrl, restauranteId]);
-  
+
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (item) => {
+    const existingItem = cartItems.find(
+      (cartItem) => cartItem.name === item.name
+    );
+
+    if (existingItem) {
+      const updatedCart = cartItems.map((cartItem) =>
+        cartItem.name === item.name
+          ? { ...cartItem, quantity: (cartItem.quantity || 1) + 1 }
+          : cartItem
+      );
+      setCartItems(updatedCart);
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (item) => {
+    const updatedCart = cartItems.map((cartItem) =>
+      cartItem.name === item.name
+        ? { ...cartItem, quantity: Math.max((cartItem.quantity || 1) - 1, 0) }
+        : cartItem
+    );
+
+    setCartItems(updatedCart.filter((cartItem) => cartItem.quantity > 0));
+  };
+
+  const calculateTotalPrice = () => {
+    const total = cartItems.reduce(
+      (acc, item) => {
+        const itemTotalPrice = item.price * (item.quantity || 1);
+        acc.totalPrice += itemTotalPrice;
+        acc.totalQuantity += item.quantity || 1;
+        return acc;
+      },
+      { totalPrice: 0, totalQuantity: 0 }
+    );
+
+    return total;
+  };
+
   return (
     <>
       <Header setFiltro={() => {}} />
@@ -105,11 +178,21 @@ function ItensPage() {
             <img src="..\src\assets\img\Rectangle 28.png" alt="Restaurant" />
             <div className={styles.item_principal_info}>
               <h1>{restaurante.name}</h1>
-            </div>
-            <div className={styles.infos}>
               <p>{restaurante.location}</p>
-              <p>Rating: {restaurante.rating}</p>
-              <p>Delivery Time: {restaurante.deliveryTime}</p>
+            </div>
+            <div className={styles.item_principal_info2}>
+              <div className={styles.infos}>
+                <p>Rating: {restaurante.rating}</p>
+                <p>100+ ratings</p>
+              </div>
+              <div className={styles.infos_time}>
+                <p>{restaurante.deliveryTime}</p>
+                <p>Delivery Time</p>
+              </div>
+              <div className={styles.infos_price}>
+                <p>₹200</p>
+                <p>Cost for two</p>
+              </div>
             </div>
             <div className={styles.ofeers}>
               <h1>Offeers</h1>
@@ -117,10 +200,10 @@ function ItensPage() {
               <p>20% off | Use code PARTY</p>
             </div>
           </div>
-          <div className={styles.search}>
-            <input type="Search" placeholder="Search for dish" />
-            <button>Favorite</button>
-          </div>
+        </div>
+        <div className={styles.search}>
+          <input type="Search" placeholder="Search for dish" />
+          <button>Favorito</button>
         </div>
         <div className={styles.itens_page_dados}>
           <div className={styles.itens_page_dados_ul}>
@@ -134,24 +217,48 @@ function ItensPage() {
           </div>
           <div className={styles.itens_page_dados_itens}>
             <div className={styles.itens_subpage}>
-              {<PratosPrincipais apiUrl={pratosApiUrl} />}
-              
+              <PratosPrincipais
+                apiUrl={pratosApiUrl}
+                restauranteId={restauranteId}
+                addToCart={addToCart}
+              />
             </div>
           </div>
           <div className={styles.itens_page_dados_card_lateral}>
             <div className={styles.itens_page_dados_card_lateral_info}>
               <h1>Cart</h1>
               <h2>from {restaurante.name}</h2>
-              {/* Restante do código */}
-              <p>PREÇO DO PRATO</p>
-
-              <h2>from NAME DE OUTRO SE TIVER RESTAURANTE</h2>
-              <h5>NOME DO PRATO</h5>
-              <p>PREÇO DO PRATO</p>
-
-              <h1>Subtotal + PREÇO TOTAL DAS COMPRAS DOS PRATOS</h1>
-              <p>Extra charges may apply</p>
-              <button>Checkout</button>
+              {cartItems.map((item, index) => (
+                <div key={index} className={styles.cart_item}>
+                  <p>{item.name}</p>
+                  <p>{item.price}</p>
+                  <div className={styles.item_controls}>
+                    <button onClick={() => removeFromCart(item)}>−</button>
+                    <span className={styles.quantity_display}>
+                      {item.quantity || 1}
+                    </span>
+                    <button
+                      className={styles.plus_button}
+                      onClick={() =>
+                        addToCart({
+                          ...item,
+                          quantity: (item.quantity || 1) + 1,
+                        })
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {cartItems.length > 0 && (
+                <div className={styles.cart_subtotal}>
+                  <h2>Subtotal</h2>
+                  <p>₹{calculateTotalPrice().totalPrice}</p>
+                </div>
+              )}
+              <p>Total items: {calculateTotalPrice().totalQuantity}</p>
+              <button className={styles.checkout_button}>Checkout</button>
             </div>
           </div>
         </div>

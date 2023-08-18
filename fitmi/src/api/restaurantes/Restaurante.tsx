@@ -38,6 +38,8 @@ const restaurantImages = [
   restaurantImage8,
 ];
 
+
+
 function Restaurante({ apiUrl, filtro }: RestauranteProps) {
   const itemsPerRow = 4;
 
@@ -66,9 +68,18 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
                   rating
                   deliveryTime
                   image
+                  topDishes{
+                    ... AllDishes
+                 }
                 }
               }
             }
+          }
+          fragment AllDishes on Dish {
+            name
+            description
+            image
+            price
           }
         `;
 
@@ -80,7 +91,8 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
           { headers }
         );
 
-        setRestaurantes(response.data.data.fitMes.edges.map((edge: unknown) => edge.node));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setRestaurantes(response.data.data.fitMes.edges.map((edge: any) => edge.node));
         setIsLoading(false);
       } catch (error) {
         setError("Error fetching data");
@@ -105,8 +117,6 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
       )
     : restaurantes;
 
-
-
   return (
     <div className={styles.Restaurantes_pratos}>
       <div className={styles.Restaurantes_pratos_title}>
@@ -120,10 +130,9 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
                     <Link to={`/ItensPage/${restaurante.objectId}`}>
                       <img src={restaurantImages[index]} alt={restaurante.name} />
                       <h2>{restaurante.name}</h2>
-                      <p>Location: {restaurante.location}</p>
-                      <p>Rating: {restaurante.rating}</p>
-                      <p>Delivery Time: {restaurante.deliveryTime}</p>
-                      <p>Expensive: {restaurante.isExpensive ? "Yes" : "No"}</p>
+                      <p> <span>sout indie</span>estrela {restaurante.rating}</p>
+                      <p>emoji {restaurante.deliveryTime}</p>
+        
                     </Link>
                   </div>
                 ))}
