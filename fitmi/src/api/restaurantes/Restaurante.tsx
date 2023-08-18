@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Certifique-se de importar o Link
+import { Link } from "react-router-dom";
 import axios from "axios";
 import styles from "./Restaurante.module.css";
 import restaurantImage1 from "../../assets/img/Rectangle 26 (1).png";
@@ -12,7 +12,7 @@ import restaurantImage7 from "../../assets/img/Rectangle 26 (7).png";
 import restaurantImage8 from "../../assets/img/Rectangle 26.png";
 
 interface Restaurante {
-  objectId: string; // Adicione a propriedade objectId
+  objectId: string;
   name: string;
   rating: number;
   deliveryTime: string;
@@ -24,7 +24,7 @@ interface Restaurante {
 
 interface RestauranteProps {
   apiUrl: string;
-  filtro: string; // Adicione a propriedade filtro
+  filtro: string;
 }
 
 const restaurantImages = [
@@ -55,8 +55,32 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
           "Content-Type": "application/json",
         };
 
-        const response = await axios.get(apiUrl, { headers });
-        setRestaurantes(response.data.results);
+        const restauranteQuery = `
+          query GetAllRestaurantes {
+            fitMes {
+              count
+              edges {
+                node {
+                  objectId
+                  name
+                  rating
+                  deliveryTime
+                  image
+                }
+              }
+            }
+          }
+        `;
+
+        const response = await axios.post(
+          apiUrl,
+          {
+            query: restauranteQuery,
+          },
+          { headers }
+        );
+
+        setRestaurantes(response.data.data.fitMes.edges.map((edge: unknown) => edge.node));
         setIsLoading(false);
       } catch (error) {
         setError("Error fetching data");
@@ -81,6 +105,8 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
       )
     : restaurantes;
 
+
+
   return (
     <div className={styles.Restaurantes_pratos}>
       <div className={styles.Restaurantes_pratos_title}>
@@ -91,7 +117,6 @@ function Restaurante({ apiUrl, filtro }: RestauranteProps) {
                 .slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow)
                 .map((restaurante, index) => (
                   <div key={index} className={styles.item}>
-                    {/* Use o objectId como parâmetro na URL do Link */}
                     <Link to={`/ItensPage/${restaurante.objectId}`}>
                       <img src={restaurantImages[index]} alt={restaurante.name} />
                       <h2>{restaurante.name}</h2>

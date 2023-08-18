@@ -9,7 +9,8 @@ import banana from "../../assets/img/Component 4.png";
 
 
 function Homepage() {
-  const restauranteApiUrl  = "https://parseapi.back4app.com/classes/FitMe"; // Use a URL da API aqui
+  const apiUrl  = "https://parseapi.back4app.com/graphql"; // Use a URL da API aqui
+ // const restauranteApiUrl  = "https://parseapi.back4app.com/classes/FitMe"; // Use a URL da API aqui
   //const pratosApiUrl  = "https://parseapi.back4app.com/classes/Dish"; 
 
   const [filtro, setFiltro] = useState("");
@@ -32,10 +33,8 @@ function Homepage() {
           <img className={styles.image_2} src="..\src\assets\img\Rectangle 2.png" alt='img2'></img>
         </div>
       </div>
-      {<h1>Restaurantes</h1>}
-       <Restaurante apiUrl={restauranteApiUrl} filtro={filtro} /> 
-      {/*<h1>Lista de Pratos Principais</h1>*/}
-      {/*<PratosPrincipais apiUrl={pratosApiUrl} >*/}
+      {<h1>Restaurants</h1>}
+       <Restaurante apiUrl={apiUrl} filtro={filtro} />
       <Footer />
     </div>
   );
