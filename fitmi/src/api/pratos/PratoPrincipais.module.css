@@ -1,76 +1,108 @@
 .pratos_principais {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 20px 0;
-    margin-left: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  margin-left: 3rem;
+}
+
+.pratos_principais__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+}
+
+.pratos_principais__container h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0px;
+  margin-left: 2rem;
+}
+
+.pratos_principais__container p {
+  margin-left: 2rem;
+}
+
+.pratos_principais__container h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  margin-left: 2rem;
+  margin-bottom: 5px;
+  height: 3rem;
+  width: 25rem;
+}
+
+.pratos_principais__container span {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  height: 3rem;
+  width: 25rem;
+  color: #fc8019;
+}
+
+.pratos_principais__container img {
+  max-width: 8rem;
+  height: auto;
+  border-radius: 5px;
+  margin-left: 28rem;
+  margin-top: -5.5rem;
+}
+
+.pratos_principais__container button {
+  margin-left: 28rem;
+  margin-top: -1rem;
+  width: 8rem;
+  height: 2rem;
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #1AC84B;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.pratos_principais__container button:hover {
+  background-color: #1AC84B;
+  color: white;
+}
+
+/* Media query for screen size 870px and below */
+@media screen and (max-width: 870px) {
+  .pratos_principais__container img,
+  .pratos_principais__container button {
+      margin-left: 0;
+      margin-top: 1rem;
+      width: auto;
   }
-  
+
+  .pratos_principais__container h3,
+  .pratos_principais__container span {
+      width: auto;
+  }
+}
+
+/* Media query for screen size 370px and below */
+@media screen and (max-width: 370px) {
   .pratos_principais__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 5px;
-    background-color: rgb(245, 246, 255);
-    width: 100%;
-
-
-  }
-  
-  .pratos_principais__container h2 {
-    font-size: 1.2rem;
-    margin-bottom: 0px;
-    margin-left: 2rem;
-  }
-  
-  .pratos_principais__container p {
-    margin-left: 2rem;
+      padding: 1rem; /* Adjust padding for smaller screens */
   }
 
-  .pratos_principais__container h3{
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    margin-left: 2rem;
-    margin-bottom: 5px;
-    height: 3rem;
-    width: 25rem;
+  .pratos_principais__container img,
+  .pratos_principais__container button {
+      margin-left: 0;
+      margin-top: 1rem;
+      width: 100%;
   }
 
-  .pratos_principais__container span{
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 5px;
-    height: 3rem;
-    width: 25rem;
-    color: #fc8019;
+  .pratos_principais__container h3,
+  .pratos_principais__container span {
+      width: 100%;
   }
-  
-  .pratos_principais__container img {
-    max-width: 8rem;
-    height: auto;
-    border-radius: 5px;
-    margin-left: 28rem;
-    margin-top: -5.5rem;
-  }
-
-  .pratos_principais__container button{
-    margin-left: 28rem;
-    margin-top: -1rem;
-    width: 8rem;
-    height: 2rem;
-    border-radius: 5px;
-    border: none;
-    background-color: white;
-    color: #1AC84B;
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  .pratos_principais__container button:hover{
-    background-color: #1AC84B;
-    color: white;
-  }
-  
+}
