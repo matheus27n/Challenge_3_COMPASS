@@ -33,7 +33,7 @@ function Homepage() {
       {<h1>Restaurantes</h1>}
        <Restaurante apiUrl={restauranteApiUrl} filtro={filtro} /> 
       {/*<h1>Lista de Pratos Principais</h1>*/}
-      {/*<PratosPrincipais apiUrl={pratosApiUrl}/>*/}
+      {/*<PratosPrincipais apiUrl={pratosApiUrl} >*/}
       <Footer />
     </div>
   );

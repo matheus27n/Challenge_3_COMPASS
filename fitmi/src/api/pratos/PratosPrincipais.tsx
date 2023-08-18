@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import styles from "../pratos/PratoPrincipais.module.css";
+import axios from "axios";
+import pratoImg1 from "../../assets/img/Rectangle 29.png";
+import pratoImg2 from "../../assets/img/Rectangle 26 (1).png";
+import pratoImg3 from "../../assets/img/Rectangle 26 (2).png";
 
 interface PratoPrincipal {
   price: number;
@@ -14,8 +18,12 @@ interface PratosPrincipaisProps {
   restauranteId: string; // ID do restaurante para filtragem
 }
 
+const pratoImages = [pratoImg1, pratoImg2, pratoImg3];
+
 function PratosPrincipais({ apiUrl, restauranteId }: PratosPrincipaisProps) {
-  const [pratosPrincipais, setPratosPrincipais] = useState<PratoPrincipal[]>([]);
+  const [pratosPrincipais, setPratosPrincipais] = useState<PratoPrincipal[]>(
+    []
+  );
 
   useEffect(() => {
     const headers = {
@@ -36,21 +44,26 @@ function PratosPrincipais({ apiUrl, restauranteId }: PratosPrincipaisProps) {
         setPratosPrincipais(data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, [apiUrl, restauranteId]);
 
   return (
-    <div>
-      {/*<h1>Pratos Principais</h1>*/}
-      {pratosPrincipais.map((prato, index) => (
-        <div key={index}>
-          <h2>{prato.name}</h2>
-          <p>Price: {prato.price}</p>
-          <p>Description: {prato.description}</p>
-          <img src={prato.image} alt={prato.name} />
-        </div>
-      ))}
+    <div className={styles.pratos_principais}>
+      <div className={styles.pratos_principais__container}>
+        {pratosPrincipais.map((prato, index) => (
+            <div key={index}>
+              <h2>{prato.name}</h2>
+              <p>Price: {prato.price}</p>
+              <h3>Description: {prato.description}</h3>
+              <img
+                src={pratoImages[index % pratoImages.length]}
+                alt={prato.name}
+              />
+              <button>Add +</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -118,12 +118,8 @@
 .itens_subpage{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 35rem;
-    height: 70%;
-    background-color: red;
-
+    width: 40rem;
+    height: 50%;
 }
 
 .itens_subpage h1{
@@ -155,9 +151,6 @@
 .itens_page_dados_itens{
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
 }
 
 .itens_page_dados_itens img{
@@ -290,7 +283,7 @@
 }
 
 /* Estilos para dispositivos móveis */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .itens_page_container {
       flex-direction: column;
     }
@@ -332,7 +325,7 @@
     }
   }
   
-  /* Estilos para tablets */
+  /* Estilos para tablets 
   @media (min-width: 769px) and (max-width: 1024px) {
     .item_principal {
       width: 50%;
@@ -361,7 +354,7 @@
       margin-left: 0;
     }
   }
-  
+   */
   /* Estilos para desktop */
 
   

@@ -16,7 +16,9 @@ function ItensPage() {
     name: "",
     address: "",
     description: "",
-    pratos: [],
+    location: "", // Assuming this property is needed
+    rating: "", // Assuming this property is needed
+    deliveryTime: "", // Assuming this property is needed
   });
 
   const [pratosPrincipais, setPratosPrincipais] = useState([]);
@@ -31,12 +33,9 @@ function ItensPage() {
           "Content-Type": "application/json",
         };
 
-        const response = await axios.get(
-          `${restauranteApiUrl}/${restauranteId}`,
-          {
-            headers,
-          }
-        );
+        const response = await axios.get(`${restauranteApiUrl}/${restauranteId}`, {
+          headers,
+        });
 
         setRestaurante(response.data);
       } catch (error) {
@@ -56,7 +55,7 @@ function ItensPage() {
           "X-Parse-Client-Key": "zXOqJ2k44R6xQqqlpPuizAr3rs58RhHXfU7Aj20V",
           "Content-Type": "application/json",
         };
-
+  
         const query = `
           query PratosPrincipaisQuery($restauranteId: String!) {
             pratos_principais(where: { restauranteId: $restauranteId }) {
@@ -68,42 +67,42 @@ function ItensPage() {
             }
           }
         `;
-
+  
         const variables = {
           restauranteId: restauranteId,
         };
-
+  
         const requestBody = {
           query: query,
           variables: variables,
         };
-
+  
         const response = await axios.post(pratosApiUrl, requestBody, {
           headers,
         });
-
+  
         if (response.data.errors) {
           console.error("GraphQL error:", response.data.errors);
           return;
         }
-
-        const data = response.data.data.pratos_principais;
+  
+        const data = response.data.data.pratos_principais; // Access directly without 'results'
         setPratosPrincipais(data.slice(0, 3)); // Get the first 3 pratos
       } catch (error) {
         console.error("Error fetching pratos data:", error);
       }
     };
-
+  
     fetchPratosPrincipais();
   }, [pratosApiUrl, restauranteId]);
-
+  
   return (
     <>
       <Header setFiltro={() => {}} />
       <div className={styles.itens_page}>
         <div className={styles.itens_page_container}>
           <div className={styles.item_principal}>
-            <img src="..\src\assets\img\Rectangle 28.png"></img>
+            <img src="..\src\assets\img\Rectangle 28.png" alt="Restaurant" />
             <div className={styles.item_principal_info}>
               <h1>{restaurante.name}</h1>
             </div>
@@ -119,7 +118,7 @@ function ItensPage() {
             </div>
           </div>
           <div className={styles.search}>
-            <input type="Search" placeholder="Search for dish"></input>
+            <input type="Search" placeholder="Search for dish" />
             <button>Favorite</button>
           </div>
         </div>
@@ -135,17 +134,15 @@ function ItensPage() {
           </div>
           <div className={styles.itens_page_dados_itens}>
             <div className={styles.itens_subpage}>
-            {/*<PratosPrincipais apiUrl={pratosApiUrl} />*/}
+              {/*<PratosPrincipais apiUrl={pratosApiUrl} restauranteId={restauranteId} />*/}
+              
             </div>
-              <img src="..\src\assets\img\Rectangle 28.png"></img>
-              <button>Add +</button>
           </div>
           <div className={styles.itens_page_dados_card_lateral}>
-            <img></img>
             <div className={styles.itens_page_dados_card_lateral_info}>
               <h1>Cart</h1>
-              <h2>from NAME DO RESTAURANTE</h2>
-              <h5>NOME DO PRATO</h5>
+              <h2>from {restaurante.name}</h2>
+              {/* Restante do código */}
               <p>PREÇO DO PRATO</p>
 
               <h2>from NAME DE OUTRO SE TIVER RESTAURANTE</h2>
@@ -154,7 +151,6 @@ function ItensPage() {
 
               <h1>Subtotal + PREÇO TOTAL DAS COMPRAS DOS PRATOS</h1>
               <p>Extra charges may apply</p>
-
               <button>Checkout</button>
             </div>
           </div>
