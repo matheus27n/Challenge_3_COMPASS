@@ -5,11 +5,14 @@ import Footer from "../../components/footer/Footer";
 import styles from "./ItensPage.module.css";
 import axios from "axios";
 import PratosPrincipais from "../../api/pratos/PratosPrincipais";
+import porcetangem from '../../assets/img/Vector1.png'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function ItensPage() {
   const restauranteApiUrl = "https://parseapi.back4app.com/graphql";
-  const pratosApiUrl = "https://parseapi.back4app.com/graphql"; // Use the GraphQL API URL
-
+  const pratosApiUrl = "https://parseapi.back4app.com/graphql";
   const { restauranteId } = useParams();
 
   const [restaurante, setRestaurante] = useState({
@@ -169,9 +172,34 @@ function ItensPage() {
     return total;
   };
 
+  const handleCheckout = () => {
+    if (cartItems.length > 0) {
+      toast.success("Checkout successful!", {
+        position: "top-right",
+        autoClose: 3000, // Duration for which the notification is displayed (in milliseconds)
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      toast.error("Cart is empty. Add items to cart before checking out.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  };
+  
+
   return (
     <>
-      <Header setFiltro={() => {}} />
+      <Header setFiltro={() => {}}/>
+      <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.itens_page}>
         <div className={styles.itens_page_container}>
           <div className={styles.item_principal}>
@@ -196,8 +224,8 @@ function ItensPage() {
             </div>
             <div className={styles.ofeers}>
               <h1>Offeers</h1>
-              <p>50% off up to ₹100 | Use code TRYNEW</p>
-              <p>20% off | Use code PARTY</p>
+              <p><img src={porcetangem}></img>50% off up to ₹100 | Use code TRYNEW</p>
+              <p><img src={porcetangem}></img>20% off | Use code PARTY</p>
             </div>
           </div>
         </div>
@@ -258,10 +286,11 @@ function ItensPage() {
                 </div>
               )}
               <p>Total items: {calculateTotalPrice().totalQuantity}</p>
-              <button className={styles.checkout_button}>Checkout</button>
+              <button className={styles.checkout_button} onClick={handleCheckout}>Checkout</button>
             </div>
           </div>
         </div>
+      </div>
       </div>
       <Footer />
     </>

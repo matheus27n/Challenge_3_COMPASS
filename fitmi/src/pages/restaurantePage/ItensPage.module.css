@@ -1,17 +1,20 @@
+.container {
+    max-width: 100%; /* Defina o valor que você achar melhor */
+    margin: 0 auto;
+}
+
 .itens_page {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
-
 
 .itens_page_container {
     margin-top: 3rem;
     width: 100%;
-    height: 17rem;
-    display: flex;
-    flex-direction: column; /* Mudado para "column" para responsividade */
+    height: auto;
     background: #202020;
 }
 
@@ -32,8 +35,7 @@
 }
 
 .item_principal{
-    width: 25%; /* Change to full width for responsiveness */
-    height: auto;
+    width: 25%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,6 +83,7 @@
     height: 10rem;
     border: 2px dashed #fc8019;
     border-radius: 10px;
+    margin-bottom: 1rem;
 }
 
 .search{
@@ -294,6 +297,15 @@
     transition: background-color 0.3s;
     padding: 0.3rem 0.5rem;
     border-radius: 5px;
+  }
+
+  .ofeers img{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 10px;
+    margin-left: -1rem;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
   }
   
   
