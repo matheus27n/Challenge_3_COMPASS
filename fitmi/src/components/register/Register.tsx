@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../footer/Footer";
 import styles from "../register/Register.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoImg from "../../assets/img/Logo.png";
 
 function Register() {
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -83,6 +84,7 @@ function Register() {
       setConfirmPassword("");
       setErrorMessage("");
       window.alert("Registro realizado com sucesso!");
+      navigate("/login");
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
       window.alert(

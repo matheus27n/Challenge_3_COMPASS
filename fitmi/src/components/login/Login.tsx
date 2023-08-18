@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../footer/Footer";
 import styles from "../login/Login.module.css";
 
-function Login() {
-  const navigate = useNavigate(); // Initialize useNavigate
+const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loginError, setLoginError] = useState(""); 
 
 
 
@@ -19,6 +20,7 @@ function Login() {
 
     setUsernameError("");
     setPasswordError("");
+    setLoginError(""); 
 
     if (!username) {
       setUsernameError("Username  vazio.");
@@ -66,17 +68,23 @@ function Login() {
         { headers }
       );
 
-      console.log("Usuário logado:", response.data);
-
-      // Limpa os campos do formulário após o login
-      setUsername("");
-      setPassword("");
-      window.alert("Login realizado com sucesso!");
-      navigate("/");
+      if (response.data.data && response.data.data.logIn.viewer.user) {
+        // User exists in the database, proceed with login
+        console.log("User logged in:", response.data);
+        setUsername("");
+        setPassword("");
+        window.alert("Login successful!");
+        navigate("/");
+      } else {
+        // User does not exist in the database, show login error
+        setLoginError("Invalid username or password. Please try again.");
+      }
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      console.error("Error logging in:", error);
+      setLoginError("Invalid username or password. Please try again.");
     }
   };
+  
 
   return (
     <div className={styles.login}>
@@ -114,6 +122,7 @@ function Login() {
           </form>
           <button className={styles.form__button} onClick={handleLogin}>
             Login
+            
           </button>
           <h4>
             Don't have an account?{" "}
@@ -122,6 +131,7 @@ function Login() {
             </Link>
           </h4>
         </div>
+        {loginError && <p className={styles.error}>{loginError}</p>}
       </div>
       <Footer />
     </div>
