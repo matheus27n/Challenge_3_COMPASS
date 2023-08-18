@@ -3,13 +3,7 @@ import axios from "axios";
 import Footer from "../footer/Footer";
 import styles from "../register/Register.module.css";
 import { Link } from "react-router-dom";
-
-interface SignUpInput {
-  username: string;
-  email: string;
-  fullName: string;
-  password: string;
-}
+import LogoImg from "../../assets/img/Logo.png";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -20,8 +14,17 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const isFormValid = () => {
+    return fullName && username && email && password && confirmPassword;
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isFormValid()) {
+      setErrorMessage("Por favor, preencha todos os campos.");
+      return;
+    }
 
     try {
       const headers = {
@@ -34,22 +37,19 @@ function Register() {
       const userExists = await checkUserExists(username, email);
 
       if (userExists) {
-        setErrorMessage("Username or email already in use.");
+        setErrorMessage("Username ou email já está em uso!!");
         return;
       }
 
-      const userData: SignUpInput = {
-        username,
-        email,
-        fullName,
-        password,
-      };
-
-
-
-      const registerQuery = `
-        mutation SignUp($userData: SignUpInput!) {
-          signUp(input: $userData) {
+      const signUpQuery = `
+        mutation SignUp($username: String!, $email: String!, $password: String!) {
+          signUp(input: {
+            fields: {
+              username: $username
+              email: $email
+              password: $password
+            }
+          }) {
             viewer {
               user {
                 id
@@ -61,15 +61,15 @@ function Register() {
         }
       `;
 
-      const variables = {
-        userData,
-      };
-
       const response = await axios.post(
         "https://parseapi.back4app.com/graphql",
         {
-          query: registerQuery,
-          variables: variables,
+          query: signUpQuery,
+          variables: {
+            username,
+            email,
+            password,
+          },
         },
         { headers }
       );
@@ -117,9 +117,9 @@ function Register() {
     <div className={styles.register}>
       <div className={styles.register__container}>
         <Link to="/">
-        <div className={styles.register__container__logo}>
-          <img className="logo" src="../src/assets/img/Logo.png" alt="logo" />
-        </div>
+          <div className={styles.register__container__logo}>
+            <img className="logo" src={LogoImg} alt="logo" />
+          </div>
         </Link>
         <div className={styles.register__container__form}>
           <h1>Register</h1>
@@ -145,30 +145,32 @@ function Register() {
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               title="Please enter a valid email address"
             />
-            <p>Password</p>
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={8}
-            />
-            <p>Confirm Password</p>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              minLength={8}
-            />
-            <label>
-              Show Password
-              <input
-                type="checkbox"
-                checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)}
-              />
-            </label>
+<p>Password</p>
+<div className={styles.passwordInputContainer}>
+  <input
+    type={showPassword ? "text" : "password"}
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    required
+    minLength={8}
+  />
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    className={styles.showPasswordIcon}
+  >
+    {showPassword ? "👁️‍🗨️" : "👁️"}
+  </span>
+</div>
+
+<p>Confirm Password</p>
+<input
+  type="password"
+  value={confirmPassword}
+  onChange={(e) => setConfirmPassword(e.target.value)}
+  required
+  minLength={8}
+/>
+
             <p className={styles.error}>{errorMessage}</p>
           </form>
           <button

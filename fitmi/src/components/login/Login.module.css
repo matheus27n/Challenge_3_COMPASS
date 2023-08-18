@@ -26,6 +26,10 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+.showPasswordIcon {
+  cursor: pointer;
+  transition: 0.3s;
+}
 
 .login__container__logo img {
   display: flex;

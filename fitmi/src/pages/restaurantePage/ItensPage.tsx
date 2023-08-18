@@ -134,7 +134,7 @@ function ItensPage() {
           </div>
           <div className={styles.itens_page_dados_itens}>
             <div className={styles.itens_subpage}>
-              {/*<PratosPrincipais apiUrl={pratosApiUrl} restauranteId={restauranteId} />*/}
+              {<PratosPrincipais apiUrl={pratosApiUrl} />}
               
             </div>
           </div>

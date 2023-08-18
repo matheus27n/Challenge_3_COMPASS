@@ -8,11 +8,26 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
 
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    setUsernameError("");
+    setPasswordError("");
+
+    if (!username) {
+      setUsernameError("Username  vazio.");
+      return;
+    }
+
+    if (!password) {
+      setPasswordError("Password vazio.");
+      return;
+    }
 
     try {
       const headers = {
@@ -63,14 +78,14 @@ function Login() {
 
   return (
     <div className={styles.login}>
-      <div className={styles.login__container}>
-        <Link to="/">
-          <div className={styles.login__container__logo}>
-            <img className="logo" src="..\src\assets\img\Logo.png" alt="logo" />
-          </div>
-        </Link>
-        <h1>Login</h1>
-        <div className={styles.login__container__form}>
+    <div className={styles.login__container}>
+      <Link to="/">
+        <div className={styles.login__container__logo}>
+          <img className="logo" src="..\src\assets\img\Logo.png" alt="logo" />
+        </div>
+      </Link>
+      <h1>Login</h1>
+      <div className={styles.login__container__form}>
           <form className={styles.form}>
             <p>Username</p>
             <input
@@ -78,20 +93,22 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            <p className={styles.error}>{usernameError}</p>
             <p>Password</p>
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <label>
-              Show Password
+            <div className={styles.passwordInputContainer}>
               <input
-                type="checkbox"
-                checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)}
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-            </label>
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.showPasswordIcon}
+              >
+                {showPassword ? "👁️‍🗨️" : "👁️"}
+              </span>
+            </div>
+            <p className={styles.error}>{passwordError}</p>
           </form>
           <button className={styles.form__button} onClick={handleLogin}>
             Login

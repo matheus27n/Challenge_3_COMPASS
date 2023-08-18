@@ -25,6 +25,32 @@
     transform: scale(1.1);
 }
 
+.passwordInputContainer {
+    position: relative;
+  }
+  
+  .passwordInputContainer input {
+    border: 2px dashed #fc8019;
+    height: 2rem;
+    width: calc(100% - 30px); /* Ajuste este valor conforme necessário */
+    padding: 0.25rem;
+    border-radius: 5px;
+  }
+  
+  .showPasswordIcon {
+    position: absolute;
+    margin-top: -0.7rem;
+    top: 50%;
+    right: 5px; /* Ajuste este valor conforme necessário */
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .showPasswordIcon:hover {
+    transform: scale(1.1);
+  }
+
+  
 .register__container__form {
     display: flex;
     flex-direction: column;

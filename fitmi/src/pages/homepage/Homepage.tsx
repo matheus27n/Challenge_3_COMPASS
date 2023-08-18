@@ -3,6 +3,8 @@ import Header from "../../components/header/Header.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import Restaurante from "../../api/restaurantes/Restaurante.tsx";
 import { useState } from "react";
+import maca from "../../assets/img/Component 5.png";
+import banana from "../../assets/img/Component 4.png";
 //import PratosPrincipais from "../../api/pratos/PratosPrincipais.tsx";
 
 
@@ -17,7 +19,7 @@ function Homepage() {
          <Header setFiltro={setFiltro} />{/* Passe a função setFiltro para o Header */}
       <div className={styles.homepage__content}>
           <div className={styles.homepage__title}>
-            <h1>Premium quality Food for your healthy & Daily Life</h1>
+            <h1>Premium <span>quality</span> Food for your<img src={banana}></img> <span>healthy <img src={maca}></img> & Daily Life</span></h1>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
